@@ -543,13 +543,13 @@
   // 🔧 CONFIGURAÇÃO FIREBASE — TROQUE PELOS SEUS DADOS
   // =============================================
   const firebaseConfig = {
-    apiKey: "COLE_SUA_API_KEY",
-    authDomain: "COLE_SEU_AUTH_DOMAIN",
-    databaseURL: "COLE_SUA_DATABASE_URL",
-    projectId: "COLE_SEU_PROJECT_ID",
-    storageBucket: "COLE_SEU_STORAGE_BUCKET",
-    messagingSenderId: "COLE_SEU_SENDER_ID",
-    appId: "COLE_SEU_APP_ID"
+    apiKey: "AIzaSyDaSSEgZRnLcwF8Mn4gsypwQBQaUvsYPOA",
+    authDomain: "kayo-chat.firebaseapp.com",
+    databaseURL: "https://kayo-chat-default-rtdb.firebaseio.com",
+    projectId: "kayo-chat",
+    storageBucket: "kayo-chat.firebasestorage.app",
+    messagingSenderId: "744949820687",
+    appId: "1:744949820687:web:0342bb17f6070c1118e27a"
   };
   // =============================================
 
@@ -683,63 +683,4 @@
     wrap.innerHTML = `
       <div class="msg-sender">${escHtml(name)}</div>
       <div class="msg-bubble">${escHtml(text)}</div>
-      <div class="msg-time">${time || now()}</div>
-    `;
-    area.insertBefore(wrap, typing);
-    area.scrollTop = area.scrollHeight;
-  }
-
-  function addSysMsg(text) {
-    const area = document.getElementById('messagesArea');
-    const typing = document.getElementById('typingIndicator');
-    const el = document.createElement('div');
-    el.className = 'sys-msg';
-    el.textContent = text;
-    area.insertBefore(el, typing);
-    area.scrollTop = area.scrollHeight;
-  }
-
-  function showTyping() {
-    const t = document.getElementById('typingIndicator');
-    if (t) t.style.display = 'flex';
-    document.getElementById('messagesArea').scrollTop = 99999;
-  }
-
-  function hideTyping() {
-    const t = document.getElementById('typingIndicator');
-    if (t) t.style.display = 'none';
-  }
-
-  function escHtml(s) {
-    return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
-  }
-
-  function now() {
-    return new Date().toLocaleTimeString('pt-BR', {hour:'2-digit',minute:'2-digit'});
-  }
-
-  function shake(id) {
-    const el = document.getElementById(id);
-    el.style.borderColor = '#ff4466';
-    el.style.boxShadow = '0 0 12px #ff446688';
-    setTimeout(() => {
-      el.style.borderColor = '';
-      el.style.boxShadow = '';
-    }, 800);
-    el.focus();
-  }
-
-  window.handleKey = function(e) {
-    if (e.key === 'Enter' && !e.shiftKey) {
-      e.preventDefault();
-      sendMsg();
-    }
-  };
-
-  window.autoResize = function(el) {
-    el.style.height = 'auto';
-    el.style.height = Math.min(el.scrollHeight, 120) + 'px';
-  };
-</script>
-</body>
-</html>
+      <div class="msg-time">${tim
