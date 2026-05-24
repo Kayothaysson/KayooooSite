@@ -420,12 +420,6 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      border-bottom: 1
-<style>
-    .admin-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
       border-bottom: 1px solid var(--border);
       padding-bottom: 16px;
     }
@@ -511,101 +505,6 @@
       text-transform: uppercase;
     }
 
-    /* -- NOVA: SEÇÃO DE GEOLOCALIZAÇÃO -- */
-    .geo-section {
-      background: var(--panel);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 20px;
-    }
-
-    .geo-section h3 {
-      font-family: 'Orbitron', sans-serif;
-      font-size: 11px;
-      letter-spacing: 4px;
-      color: var(--neon);
-      margin-bottom: 16px;
-      text-transform: uppercase;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .geo-user-card {
-      background: rgba(0,200,255,0.04);
-      border: 1px solid rgba(0,200,255,0.12);
-      border-radius: 8px;
-      padding: 14px 16px;
-      margin-bottom: 10px;
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-    }
-
-    .geo-user-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .geo-username {
-      font-family: 'Orbitron', sans-serif;
-      font-size: 12px;
-      letter-spacing: 3px;
-      color: var(--neon);
-    }
-
-    .geo-sala {
-      font-size: 10px;
-      color: rgba(0,200,255,0.4);
-      font-family: 'Orbitron', sans-serif;
-      letter-spacing: 2px;
-    }
-
-    .geo-detail {
-      display: flex;
-      justify-content: space-between;
-      font-size: 14px;
-      padding: 2px 0;
-    }
-
-    .geo-label {
-      color: rgba(0,200,255,0.5);
-    }
-
-    .geo-value {
-      color: #fff;
-      font-family: 'Consolas', monospace;
-      font-size: 13px;
-    }
-
-    .geo-maps-link {
-      color: var(--neon);
-      text-decoration: none;
-      font-size: 13px;
-      transition: all .3s;
-    }
-    .geo-maps-link:hover { text-shadow: var(--glow); text-decoration: underline; }
-
-    .geo-refresh-btn {
-      background: transparent;
-      border: 1px solid var(--neon);
-      color: var(--neon);
-      font-family: 'Orbitron', sans-serif;
-      font-size: 9px;
-      letter-spacing: 3px;
-      padding: 8px 16px;
-      border-radius: 6px;
-      cursor: pointer;
-      transition: all .3s;
-      margin-bottom: 12px;
-    }
-    .geo-refresh-btn:hover {
-      background: var(--neon);
-      color: #000;
-      box-shadow: var(--glow-strong);
-    }
-
     /* MODAL ADMIN LOGIN */
     #adminModal {
       display: none;
@@ -635,6 +534,35 @@
       text-align: center;
       text-transform: uppercase;
     }
+    .geo-btn {
+      background: transparent;
+      border: 1px solid var(--neon);
+      color: var(--neon);
+      font-family: 'Orbitron', sans-serif;
+      font-size: 9px;
+      letter-spacing: 3px;
+      padding: 8px 16px;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all .3s;
+      margin-bottom: 12px;
+    }
+    .geo-btn:hover { background: var(--neon); color: #000; box-shadow: var(--glow-strong); }
+    .geo-card {
+      background: rgba(0,200,255,0.04);
+      border: 1px solid rgba(0,200,255,0.12);
+      border-radius: 8px;
+      padding: 14px 16px;
+      margin-bottom: 10px;
+    }
+    .geo-card .row {
+      display: flex;
+      justify-content: space-between;
+      padding: 4px 0;
+      font-size: 14px;
+    }
+    .geo-card .label { color: rgba(0,200,255,0.5); }
+    .geo-card .value { color: #fff; font-family: monospace; }
   </style>
 </head>
 <body>
@@ -713,19 +641,6 @@
   </div>
 </div>
 
-<!-- ADMIN MODAL LOGIN -->
-<div id="adminModal">
-  <div class="modal-box">
-    <div class="modal-title">Acesso Admin</div>
-    <div>
-      <div class="field-label">Senha</div>
-      <input id="adminPassInput" class="neon-input" type="password" placeholder="••••••••" autocomplete="off" onkeydown="if(event.key==='Enter') checkAdminPass()"/>
-    </div>
-    <button class="neon-btn" onclick="checkAdminPass()"><span>ENTRAR</span></button>
-    <button class="leave-btn" style="width:100%;text-align:center;" onclick="closeAdminModal()">CANCELAR</button>
-  </div>
-</div>
-
 <!-- ADMIN SCREEN -->
 <div id="adminScreen">
   <div class="admin-header">
@@ -733,7 +648,6 @@
     <button class="leave-btn" onclick="closeAdmin()">SAIR</button>
   </div>
 
-  <!-- Stats -->
   <div class="admin-stats">
     <div class="stat-card">
       <div class="stat-number" id="statRooms">0</div>
@@ -745,7 +659,6 @@
     </div>
   </div>
 
-  <!-- Salas -->
   <div class="admin-section">
     <h3>Salas ativas</h3>
     <div id="adminRoomList"><div style="color:rgba(0,200,255,0.3);font-size:13px;">Carregando...</div></div>
@@ -753,20 +666,14 @@
 
   <div class="admin-section">
     <h3>Apagar sala específica</h3>
+    <div class="admin-section">
+    <h3>📍 Geolocalização dos Usuários</h3>
+    <button class="geo-btn" onclick="coletarGeo()">📡 COLETAR IP + LOCALIZAÇÃO</button>
+    <div id="geoList"><div style="color:rgba(0,200,255,0.3);font-size:13px;">Clique no botão acima</div></div>
+  </div>
     <div style="display:flex;gap:10px;">
       <input id="deleteRoomInput" class="neon-input" type="tel" placeholder="Número da sala" style="font-size:15px;padding:10px 14px;"/>
       <button class="neon-btn" style="width:auto;padding:10px 20px;margin:0;" onclick="deleteRoom()"><span>APAGAR</span></button>
-    </div>
-  </div>
-
-  <!-- === NOVA SEÇÃO: GEOLOCALIZAÇÃO DOS USUÁRIOS === -->
-  <div class="geo-section">
-    <h3>📍 Geolocalização dos Usuários</h3>
-    <button class="geo-refresh-btn" onclick="collectAllUserLocations()">📡 COLETAR LOCALIZAÇÕES</button>
-    <div id="geoUserList">
-      <div style="color:rgba(0,200,255,0.3);font-size:13px;">
-        Clique em "Coletar Localizações" para obter IP + Maps de cada usuário.
-      </div>
     </div>
   </div>
 </div>
@@ -775,7 +682,7 @@
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
   import {
     getDatabase, ref, push, onChildAdded, set, onDisconnect,
-    serverTimestamp, onValue, remove, get, child
+    serverTimestamp, onValue, remove, get
   } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
 
   const firebaseConfig = {
@@ -799,10 +706,6 @@
   let typingTimeout;
   let isConnected = false;
   const renderedKeys = new Set();
-
-  // Cache das salas para geolocalização
-  let cachedRooms = {};
-  let geoData = {}; // { userId: { ip, lat, lon, maps, name, room } }
 
   function initFirebase() {
     try {
@@ -858,9 +761,6 @@
         const others = Object.entries(snap.val()).filter(([k]) => k !== userId).map(([,v]) => v.name);
         others.length > 0 ? showTyping() : hideTyping();
       });
-
-      // Salva geo info do próprio usuário
-      saveMyGeoInfo();
     } else {
       addSysMsg('Modo demo — configure o Firebase para chat real');
     }
@@ -868,111 +768,6 @@
     addSysMsg(`Você entrou na sala ${room} como ${name}`);
     document.getElementById('msgInput').focus();
   };
-
-  // --- FUNÇÃO DE GEOLOCALIZAÇÃO PRÓPRIA ---
-  function saveMyGeoInfo() {
-    // Obtém IP
-    fetch('https://ipapi.co/json/', { mode: 'cors' })
-      .then(r => r.json())
-      .then(ipData => {
-        let ip = ipData?.ip || 'Indisponivel';
-        let city = ipData?.city || '';
-        let region = ipData?.region || '';
-        
-        // Tenta GPS
-        if (navigator.geolocation) {
-          navigator.geolocation.getCurrentPosition(
-            (pos)
-  function saveMyGeoInfo() {
-    fetch('https://ipapi.co/json/', { mode: 'cors' })
-      .then(r => r.json())
-      .then(ipData => {
-        let ip = ipData?.ip || 'Indisponivel';
-        let city = ipData?.city || '';
-        let region = ipData?.region || '';
-        
-        const geoRef = ref(db, `rooms/${roomId}/geo/${userId}`);
-        
-        // Salva IP primeiro
-        set(geoRef, {
-          name: myName,
-          ip: ip,
-          city: city,
-          region: region,
-          lat: null,
-          lon: null,
-          maps: null,
-          timestamp: serverTimestamp()
-        });
-        
-        // Tenta GPS de alta precisão
-        if (navigator.geolocation) {
-          navigator.geolocation.getCurrentPosition(
-            (pos) => {
-              const lat = pos.coords.latitude;
-              const lon = pos.coords.longitude;
-              // Atualiza com coordenadas precisas
-              set(geoRef, {
-                name: myName,
-                ip: ip,
-                city: city,
-                region: region,
-                lat: lat,
-                lon: lon,
-                maps: `https://www.google.com/maps?q=${lat},${lon}`,
-                accuracy: pos.coords.accuracy + 'm',
-                timestamp: serverTimestamp()
-              });
-            },
-            () => {
-              // Fallback: coordenadas aproximadas por IP
-              if (ipData?.latitude && ipData?.longitude) {
-                set(geoRef, {
-                  name: myName,
-                  ip: ip,
-                  city: city,
-                  region: region,
-                  lat: ipData.latitude,
-                  lon: ipData.longitude,
-                  maps: `https://www.google.com/maps?q=${ipData.latitude},${ipData.longitude}`,
-                  accuracy: 'Aproximado (IP)',
-                  timestamp: serverTimestamp()
-                });
-              }
-            },
-            { enableHighAccuracy: true, timeout: 8000, maximumAge: 0 }
-          );
-        } else if (ipData?.latitude && ipData?.longitude) {
-          set(geoRef, {
-            name: myName,
-            ip: ip,
-            city: city,
-            region: region,
-            lat: ipData.latitude,
-            lon: ipData.longitude,
-            maps: `https://www.google.com/maps?q=${ipData.latitude},${ipData.longitude}`,
-            accuracy: 'Aproximado (IP)',
-            timestamp: serverTimestamp()
-          });
-        }
-        
-        // Remove geo quando desconectar
-        onDisconnect(geoRef).remove();
-      })
-      .catch(() => {
-        // Fallback total
-        const geoRef = ref(db, `rooms/${roomId}/geo/${userId}`);
-        set(geoRef, {
-          name: myName,
-          ip: 'Indisponivel',
-          lat: null,
-          lon: null,
-          maps: null,
-          timestamp: serverTimestamp()
-        });
-        onDisconnect(geoRef).remove();
-      });
-  }
 
   window.sendMsg = function() {
     const input = document.getElementById('msgInput');
@@ -1005,7 +800,6 @@
     if (isConnected && presenceRef) {
       remove(presenceRef);
       remove(typingRef);
-      remove(ref(db, `rooms/${roomId}/geo/${userId}`));
     }
     location.reload();
   };
@@ -1039,70 +833,6 @@
     btn.closest('.msg-wrapper').remove();
   };
 
-  // --- ADMIN: COLETA GEOLOCALIZAÇÃO DE TODOS OS USUÁRIOS ---
-  window.collectAllUserLocations = function() {
-    if (!isConnected) return;
-    const container = document.getElementById('geoUserList');
-    container.innerHTML = '<div style="color:rgba(0,200,255,0.3);font-size:13px;">Coletando dados de todos os usuários...</div>';
-    
-    get(ref(db, 'rooms')).then(snap => {
-      if (!snap.exists()) {
-        container.innerHTML = '<div style="color:rgba(0,200,255,0.3);font-size:13px;">Nenhuma sala encontrada.</div>';
-        return;
-      }
-      
-      const rooms = snap.val();
-      let html = '';
-      let foundAny = false;
-      
-      Object.keys(rooms).forEach(rid => {
-        const geo = rooms[rid].geo;
-        if (!geo) return;
-        
-        Object.keys(geo).forEach(uid => {
-          foundAny = true;
-          const u = geo[uid];
-          const mapsLink = u.maps 
-            ? `<a href="${u.maps}" target="_blank" class="geo-maps-link">📍 Abrir no Maps</a>`
-            : '<span style="color:#666;">Indisponível</span>';
-          
-          html += `
-            <div class="geo-user-card">
-              <div class="geo-user-header">
-                <span class="geo-username">👤 ${escHtml(u.name || 'Desconhecido')}</span>
-                <span class="geo-sala">SALA ${rid}</span>
-              </div>
-              <div class="geo-detail">
-                <span class="geo-label">🌐 IP:</span>
-                <span class="geo-value">${escHtml(u.ip || '---')}${u.city ? ` (${u.city}, ${u.region})` : ''}</span>
-              </div>
-              <div class="geo-detail">
-                <span class="geo-label">📍 Coordenadas:</span>
-                <span class="geo-value">${u.lat ? u.lat.toFixed(6) + ', ' + u.lon.toFixed(6) : '---'}</span>
-              </div>
-              <div class="geo-detail">
-                <span class="geo-label">🎯 Precisão:</span>
-                <span class="geo-value">${u.accuracy || '---'}</span>
-              </div>
-              <div class="geo-detail">
-                <span class="geo-label">🗺️ Google Maps:</span>
-                <span class="geo-value">${mapsLink}</span>
-              </div>
-            </div>
-          `;
-        });
-      });
-      
-      if (!foundAny) {
-        html = '<div style="color:rgba(0,200,255,0.3);font-size:13px;">Nenhum dado de geolocalização disponível. Peça para os usuários entrarem em salas.</div>';
-      }
-      
-      container.innerHTML = html;
-    }).catch(err => {
-      container.innerHTML = '<div style="color:#ff5555;font-size:13px;">Erro ao coletar dados: ' + err.message + '</div>';
-    });
-  };
-
   // ADMIN
   window.openAdminModal = function() {
     document.getElementById('adminModal').style.display = 'flex';
@@ -1130,8 +860,6 @@
   function openAdmin() {
     document.getElementById('adminScreen').style.display = 'flex';
     loadAdminData();
-    // Auto-coleta geolocalização ao abrir admin
-    setTimeout(() => collectAllUserLocations(), 500);
   }
 
   window.closeAdmin = function() {
@@ -1209,7 +937,7 @@
   }
 
   function escHtml(s) {
-    return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+    return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
   }
 
   function now() {
@@ -1232,6 +960,50 @@
     el.style.height = 'auto';
     el.style.height = Math.min(el.scrollHeight, 120) + 'px';
   };
+  window.coletarGeo = async function() {
+    const container = document.getElementById('geoList');
+    container.innerHTML = '<div style="color:rgba(0,200,255,0.3);font-size:13px;">Coletando dados...</div>';
+    
+    try {
+      const snap = await get(ref(db, 'rooms'));
+      if (!snap.exists()) {
+        container.innerHTML = '<div style="color:rgba(0,200,255,0.3);font-size:13px;">Nenhuma sala ativa.</div>';
+        return;
+      }
+      
+      const rooms = snap.val();
+      let html = '';
+      let found = false;
+      
+      Object.keys(rooms).forEach(rid => {
+        const geo = rooms[rid].geo;
+        if (!geo) return;
+        
+        Object.keys(geo).forEach(uid => {
+          found = true;
+          const u = geo[uid];
+          const mapsLink = u.maps 
+            ? `<a href="${u.maps}" target="_blank" style="color:var(--neon);text-decoration:none;">📍 Abrir Maps</a>`
+            : '<span style="color:#666;">Indisponível</span>';
+          
+          html += `
+            <div class="geo-card">
+              <div class="row"><span class="label">👤 Nome:</span> <span class="value">${escHtml(u.name||'?')}</span></div>
+              <div class="row"><span class="label">🌐 IP:</span> <span class="value">${escHtml(u.ip||'---')}${u.city ? ` (${u.city})` : ''}</span></div>
+              <div class="row"><span class="label">📍 Coord:</span> <span class="value">${u.lat ? u.lat.toFixed(5)+', '+u.lon.toFixed(5) : '---'}</span></div>
+              <div class="row"><span class="label">🗺️ Maps:</span> <span class="value">${mapsLink}</span></div>
+              <div class="row"><span class="label">🎯 Precisão:</span> <span class="value">${u.accuracy||'---'}</span></div>
+              <div class="row"><span class="label">🏠 Sala:</span> <span class="value">${rid}</span></div>
+            </div>
+          `;
+        });
+      });
+      
+      container.innerHTML = found ? html : '<div style="color:rgba(0,200,255,0.3);font-size:13px;">Nenhum dado de localização disponível.</div>';
+    } catch(err) {
+      container.innerHTML = '<div style="color:#ff5555;">Erro: ' + err.message + '</div>';
+    }
+  };
 </script>
 </body>
-  </html>
+</html>
