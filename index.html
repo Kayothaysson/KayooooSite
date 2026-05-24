@@ -11,7 +11,6 @@
       --neon2: #0066ff;
       --neon3: #00ffea;
       --bg: #020b18;
-      --bg2: #040f1e;
       --panel: rgba(0, 200, 255, 0.04);
       --border: rgba(0, 200, 255, 0.18);
       --glow: 0 0 10px #00c8ff88, 0 0 30px #00c8ff44;
@@ -31,34 +30,24 @@
       justify-content: center;
     }
 
-    /* SCANLINES */
     body::before {
       content: '';
       position: fixed; inset: 0;
-      background: repeating-linear-gradient(
-        0deg,
-        transparent,
-        transparent 2px,
-        rgba(0,0,0,0.07) 2px,
-        rgba(0,0,0,0.07) 4px
-      );
+      background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.07) 2px, rgba(0,0,0,0.07) 4px);
       pointer-events: none;
       z-index: 9999;
     }
 
-    /* GRID BG */
     body::after {
       content: '';
       position: fixed; inset: 0;
-      background-image:
-        linear-gradient(rgba(0,200,255,0.04) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(0,200,255,0.04) 1px, transparent 1px);
+      background-image: linear-gradient(rgba(0,200,255,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(0,200,255,0.04) 1px, transparent 1px);
       background-size: 40px 40px;
       pointer-events: none;
       z-index: 0;
     }
 
-    /* ===================== TELA DE LOGIN ===================== */
+    /* LOGIN */
     #loginScreen {
       position: relative;
       z-index: 10;
@@ -77,21 +66,13 @@
       color: var(--neon);
       text-shadow: var(--glow-strong);
       text-transform: uppercase;
+      text-align: center;
       animation: pulseGlow 3s ease-in-out infinite;
     }
 
     @keyframes pulseGlow {
       0%,100% { text-shadow: 0 0 10px #00c8ff, 0 0 40px #00c8ff88, 0 0 80px #00c8ff33; }
       50%      { text-shadow: 0 0 20px #00c8ff, 0 0 60px #00c8ffaa, 0 0 120px #00c8ff55; }
-    }
-
-    .subtitle {
-      font-family: 'Orbitron', sans-serif;
-      font-size: 11px;
-      letter-spacing: 6px;
-      color: rgba(0,200,255,0.5);
-      text-transform: uppercase;
-      margin-top: -24px;
     }
 
     .login-box {
@@ -131,7 +112,6 @@
     }
 
     .neon-input::placeholder { color: rgba(0,200,255,0.25); letter-spacing: 1px; }
-
     .neon-input:focus {
       border-color: var(--neon);
       box-shadow: var(--glow), inset 0 0 10px rgba(0,200,255,0.05);
@@ -167,14 +147,22 @@
     }
 
     .neon-btn span { position: relative; z-index: 1; }
-
-    .neon-btn:hover {
-      box-shadow: var(--glow-strong);
-      color: #000;
-    }
+    .neon-btn:hover { box-shadow: var(--glow-strong); color: #000; }
     .neon-btn:hover::before { opacity: 1; }
 
-    /* ===================== CHAT ===================== */
+    .admin-link {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 9px;
+      letter-spacing: 3px;
+      color: rgba(0,200,255,0.25);
+      text-align: center;
+      cursor: pointer;
+      text-transform: uppercase;
+      transition: color .3s;
+    }
+    .admin-link:hover { color: rgba(0,200,255,0.6); }
+
+    /* CHAT */
     #chatScreen {
       display: none;
       position: fixed; inset: 0;
@@ -182,7 +170,6 @@
       flex-direction: column;
     }
 
-    /* HEADER */
     .chat-header {
       display: flex;
       align-items: center;
@@ -202,11 +189,7 @@
       text-shadow: var(--glow);
     }
 
-    .header-info {
-      display: flex;
-      align-items: center;
-      gap: 20px;
-    }
+    .header-info { display: flex; align-items: center; gap: 20px; }
 
     .room-badge {
       font-family: 'Orbitron', sans-serif;
@@ -218,14 +201,7 @@
       border-radius: 20px;
     }
 
-    .online-dot {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      font-size: 12px;
-      letter-spacing: 2px;
-      color: var(--neon3);
-    }
+    .online-dot { display: flex; align-items: center; gap: 6px; font-size: 12px; letter-spacing: 2px; color: var(--neon3); }
 
     .dot {
       width: 8px; height: 8px;
@@ -235,12 +211,8 @@
       animation: blink 1.5s ease-in-out infinite;
     }
 
-    @keyframes blink {
-      0%,100% { opacity: 1; }
-      50% { opacity: 0.3; }
-    }
+    @keyframes blink { 0%,100% { opacity: 1; } 50% { opacity: 0.3; } }
 
-    /* MESSAGES */
     .messages-area {
       flex: 1;
       overflow-y: auto;
@@ -255,7 +227,6 @@
     .messages-area::-webkit-scrollbar-track { background: transparent; }
     .messages-area::-webkit-scrollbar-thumb { background: rgba(0,200,255,0.2); border-radius: 2px; }
 
-    /* MENSAGEM */
     .msg-wrapper {
       display: flex;
       flex-direction: column;
@@ -285,11 +256,11 @@
       padding: 10px 16px;
       border-radius: 10px;
       font-size: 16px;
-      font-weight: 400;
       line-height: 1.5;
       letter-spacing: .5px;
       max-width: 100%;
       word-break: break-word;
+      position: relative;
     }
 
     .msg-wrapper.mine .msg-bubble {
@@ -305,14 +276,25 @@
       color: #cce8ff;
     }
 
-    .msg-time {
-      font-size: 10px;
-      color: rgba(0,200,255,0.3);
-      margin-top: 3px;
-      letter-spacing: 1px;
-    }
+    .msg-time { font-size: 10px; color: rgba(0,200,255,0.3); margin-top: 3px; letter-spacing: 1px; }
 
-    /* SYSTEM MESSAGES */
+    .delete-btn {
+      display: none;
+      position: absolute;
+      top: -8px; right: -8px;
+      width: 18px; height: 18px;
+      background: rgba(255,50,50,0.8);
+      border: none;
+      border-radius: 50%;
+      color: #fff;
+      font-size: 11px;
+      cursor: pointer;
+      align-items: center;
+      justify-content: center;
+      line-height: 1;
+    }
+    .msg-bubble:hover .delete-btn { display: flex; }
+
     .sys-msg {
       align-self: center;
       font-family: 'Orbitron', sans-serif;
@@ -326,7 +308,6 @@
       text-transform: uppercase;
     }
 
-    /* INPUT AREA */
     .chat-input-area {
       padding: 16px 24px;
       border-top: 1px solid var(--border);
@@ -345,22 +326,16 @@
       color: #fff;
       font-family: 'Rajdhani', sans-serif;
       font-size: 17px;
-      font-weight: 400;
       padding: 12px 16px;
       outline: none;
       resize: none;
       min-height: 48px;
       max-height: 120px;
       transition: all .3s;
-      letter-spacing: .5px;
     }
 
     #msgInput::placeholder { color: rgba(0,200,255,0.25); }
-
-    #msgInput:focus {
-      border-color: var(--neon);
-      box-shadow: var(--glow);
-    }
+    #msgInput:focus { border-color: var(--neon); box-shadow: var(--glow); }
 
     .send-btn {
       width: 48px; height: 48px;
@@ -375,16 +350,9 @@
       transition: all .3s;
       flex-shrink: 0;
     }
-
-    .send-btn:hover {
-      background: var(--neon);
-      color: #000;
-      box-shadow: var(--glow-strong);
-    }
-
+    .send-btn:hover { background: var(--neon); color: #000; box-shadow: var(--glow-strong); }
     .send-btn svg { width: 20px; height: 20px; }
 
-    /* STATUS BAR */
     .status-bar {
       text-align: center;
       padding: 4px;
@@ -394,62 +362,6 @@
       color: rgba(0,200,255,0.25);
     }
 
-    /* CORNER DECORATIONS */
-    .corner {
-      position: fixed;
-      width: 60px; height: 60px;
-      border-color: rgba(0,200,255,0.15);
-      border-style: solid;
-      z-index: 5;
-      pointer-events: none;
-    }
-    .corner-tl { top: 12px; left: 12px; border-width: 2px 0 0 2px; }
-    .corner-tr { top: 12px; right: 12px; border-width: 2px 2px 0 0; }
-    .corner-bl { bottom: 12px; left: 12px; border-width: 0 0 2px 2px; }
-    .corner-br { bottom: 12px; right: 12px; border-width: 0 2px 2px 0; }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(20px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
-
-    /* TYPING INDICATOR */
-    .typing-indicator {
-      display: none;
-      align-self: flex-start;
-      padding: 8px 16px;
-      background: rgba(0,200,255,0.05);
-      border: 1px solid rgba(0,200,255,0.15);
-      border-radius: 10px;
-      gap: 5px;
-      align-items: center;
-    }
-
-    .typing-dot {
-      width: 6px; height: 6px;
-      border-radius: 50%;
-      background: var(--neon);
-      animation: typingBounce 1.2s ease-in-out infinite;
-    }
-    .typing-dot:nth-child(2) { animation-delay: .2s; }
-    .typing-dot:nth-child(3) { animation-delay: .4s; }
-
-    @keyframes typingBounce {
-      0%,60%,100% { transform: translateY(0); opacity: .4; }
-      30% { transform: translateY(-5px); opacity: 1; }
-    }
-
-    /* EMPTY STATE */
-    .empty-state {
-      align-self: center;
-      margin: auto;
-      text-align: center;
-      opacity: .3;
-    }
-    .empty-state svg { width: 48px; height: 48px; color: var(--neon); margin-bottom: 12px; }
-    .empty-state p { font-family: 'Orbitron', sans-serif; font-size: 10px; letter-spacing: 3px; color: var(--neon); }
-
-    /* LEAVE BTN */
     .leave-btn {
       background: transparent;
       border: 1px solid rgba(255,50,50,0.3);
@@ -463,22 +375,178 @@
       transition: all .3s;
     }
     .leave-btn:hover { background: rgba(255,50,50,0.1); color: #ff5050; border-color: #ff5050; }
+
+    .corner { position: fixed; width: 60px; height: 60px; border-color: rgba(0,200,255,0.15); border-style: solid; z-index: 5; pointer-events: none; }
+    .corner-tl { top: 12px; left: 12px; border-width: 2px 0 0 2px; }
+    .corner-tr { top: 12px; right: 12px; border-width: 2px 2px 0 0; }
+    .corner-bl { bottom: 12px; left: 12px; border-width: 0 0 2px 2px; }
+    .corner-br { bottom: 12px; right: 12px; border-width: 0 2px 2px 0; }
+
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+    .typing-indicator {
+      display: none;
+      align-self: flex-start;
+      padding: 8px 16px;
+      background: rgba(0,200,255,0.05);
+      border: 1px solid rgba(0,200,255,0.15);
+      border-radius: 10px;
+      gap: 5px;
+      align-items: center;
+    }
+
+    .typing-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--neon); animation: typingBounce 1.2s ease-in-out infinite; }
+    .typing-dot:nth-child(2) { animation-delay: .2s; }
+    .typing-dot:nth-child(3) { animation-delay: .4s; }
+
+    @keyframes typingBounce { 0%,60%,100% { transform: translateY(0); opacity: .4; } 30% { transform: translateY(-5px); opacity: 1; } }
+
+    .empty-state { align-self: center; margin: auto; text-align: center; opacity: .3; }
+    .empty-state svg { width: 48px; height: 48px; color: var(--neon); margin-bottom: 12px; }
+    .empty-state p { font-family: 'Orbitron', sans-serif; font-size: 10px; letter-spacing: 3px; color: var(--neon); }
+
+    /* ADMIN */
+    #adminScreen {
+      display: none;
+      position: fixed; inset: 0;
+      z-index: 20;
+      background: var(--bg);
+      flex-direction: column;
+      padding: 24px;
+      gap: 20px;
+      overflow-y: auto;
+    }
+
+    .admin-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 16px;
+    }
+
+    .admin-title {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 18px;
+      font-weight: 900;
+      letter-spacing: 6px;
+      color: var(--neon);
+      text-shadow: var(--glow);
+    }
+
+    .admin-section {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 20px;
+    }
+
+    .admin-section h3 {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 11px;
+      letter-spacing: 4px;
+      color: var(--neon);
+      margin-bottom: 16px;
+      text-transform: uppercase;
+    }
+
+    .admin-room-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 0;
+      border-bottom: 1px solid rgba(0,200,255,0.08);
+      font-size: 14px;
+    }
+
+    .admin-room-item:last-child { border-bottom: none; }
+
+    .admin-del-btn {
+      background: transparent;
+      border: 1px solid rgba(255,50,50,0.4);
+      color: rgba(255,80,80,0.7);
+      font-family: 'Orbitron', sans-serif;
+      font-size: 9px;
+      letter-spacing: 2px;
+      padding: 4px 10px;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: all .3s;
+    }
+    .admin-del-btn:hover { background: rgba(255,50,50,0.15); color: #ff5050; }
+
+    .admin-stats {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .stat-card {
+      background: rgba(0,200,255,0.05);
+      border: 1px solid rgba(0,200,255,0.15);
+      border-radius: 8px;
+      padding: 14px;
+      text-align: center;
+    }
+
+    .stat-number {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 28px;
+      font-weight: 900;
+      color: var(--neon);
+      text-shadow: var(--glow);
+    }
+
+    .stat-label {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 9px;
+      letter-spacing: 3px;
+      color: rgba(0,200,255,0.4);
+      margin-top: 4px;
+      text-transform: uppercase;
+    }
+
+    /* MODAL ADMIN LOGIN */
+    #adminModal {
+      display: none;
+      position: fixed; inset: 0;
+      z-index: 30;
+      background: rgba(2,11,24,0.95);
+      align-items: center;
+      justify-content: center;
+    }
+
+    .modal-box {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 36px 40px;
+      width: min(360px, 92vw);
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .modal-title {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 14px;
+      letter-spacing: 5px;
+      color: var(--neon);
+      text-align: center;
+      text-transform: uppercase;
+    }
   </style>
 </head>
 <body>
 
-<!-- Corner decorations -->
 <div class="corner corner-tl"></div>
 <div class="corner corner-tr"></div>
 <div class="corner corner-bl"></div>
 <div class="corner corner-br"></div>
 
-<!-- ===== LOGIN ===== -->
+<!-- LOGIN -->
 <div id="loginScreen">
-  <div>
-    <div class="logo">Kayooo</div>
-    <div class="subtitle">Chat · Privado · Criptografado</div>
-  </div>
+  <div class="logo">Kayooo</div>
 
   <div class="login-box">
     <div>
@@ -490,10 +558,11 @@
       <input id="roomInput" class="neon-input" type="tel" placeholder="Ex: 1234" autocomplete="off"/>
     </div>
     <button class="neon-btn" onclick="enterRoom()"><span>⟶ ENTRAR NA SALA</span></button>
+    <div class="admin-link" onclick="openAdminModal()">· · ·</div>
   </div>
 </div>
 
-<!-- ===== CHAT ===== -->
+<!-- CHAT -->
 <div id="chatScreen">
   <div class="chat-header">
     <div class="header-title">Kayooo</div>
@@ -528,20 +597,61 @@
       </svg>
     </button>
   </div>
-  <div class="status-bar" id="statusBar">CONECTADO · CRIPTOGRAFADO · PRIVADO</div>
+  <div class="status-bar">CONECTADO · CRIPTOGRAFADO · PRIVADO</div>
 </div>
 
-<!-- ===== FIREBASE ===== -->
+<!-- ADMIN MODAL LOGIN -->
+<div id="adminModal">
+  <div class="modal-box">
+    <div class="modal-title">Acesso Admin</div>
+    <div>
+      <div class="field-label">Senha</div>
+      <input id="adminPassInput" class="neon-input" type="password" placeholder="••••••••" autocomplete="off" onkeydown="if(event.key==='Enter') checkAdminPass()"/>
+    </div>
+    <button class="neon-btn" onclick="checkAdminPass()"><span>ENTRAR</span></button>
+    <button class="leave-btn" style="width:100%;text-align:center;" onclick="closeAdminModal()">CANCELAR</button>
+  </div>
+</div>
+
+<!-- ADMIN SCREEN -->
+<div id="adminScreen">
+  <div class="admin-header">
+    <div class="admin-title">⚡ Painel Admin</div>
+    <button class="leave-btn" onclick="closeAdmin()">SAIR</button>
+  </div>
+
+  <div class="admin-stats">
+    <div class="stat-card">
+      <div class="stat-number" id="statRooms">0</div>
+      <div class="stat-label">Salas ativas</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-number" id="statUsers">0</div>
+      <div class="stat-label">Usuários online</div>
+    </div>
+  </div>
+
+  <div class="admin-section">
+    <h3>Salas ativas</h3>
+    <div id="adminRoomList"><div style="color:rgba(0,200,255,0.3);font-size:13px;">Carregando...</div></div>
+  </div>
+
+  <div class="admin-section">
+    <h3>Apagar sala específica</h3>
+    <div style="display:flex;gap:10px;">
+      <input id="deleteRoomInput" class="neon-input" type="tel" placeholder="Número da sala" style="font-size:15px;padding:10px 14px;"/>
+      <button class="neon-btn" style="width:auto;padding:10px 20px;margin:0;" onclick="deleteRoom()"><span>APAGAR</span></button>
+    </div>
+  </div>
+</div>
+
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
   import {
     getDatabase, ref, push, onChildAdded, set, onDisconnect,
-    serverTimestamp, onValue, remove, get
+    serverTimestamp, onValue, remove
   } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
 
-  // =============================================
-  // 🔧 CONFIGURAÇÃO FIREBASE — TROQUE PELOS SEUS DADOS
-  // =============================================
   const firebaseConfig = {
     apiKey: "AIzaSyDaSSEgZRnLcwF8Mn4gsypwQBQaUvsYPOA",
     authDomain: "kayo-chat.firebaseapp.com",
@@ -551,6 +661,10 @@
     messagingSenderId: "744949820687",
     appId: "1:744949820687:web:0342bb17f6070c1118e27a"
   };
+
+  // =============================================
+  // SENHA DO ADMIN — TROQUE PARA A SUA SENHA
+  const ADMIN_PASSWORD = "kayo2025admin";
   // =============================================
 
   let app, db;
@@ -558,6 +672,7 @@
   let messagesRef, typingRef, presenceRef;
   let typingTimeout;
   let isConnected = false;
+  const renderedKeys = new Set();
 
   function initFirebase() {
     try {
@@ -565,7 +680,6 @@
       db = getDatabase(app);
       isConnected = true;
     } catch(e) {
-      console.warn("Firebase não configurado — modo demo");
       isConnected = false;
     }
   }
@@ -575,13 +689,13 @@
   window.enterRoom = function() {
     const name = document.getElementById('nameInput').value.trim();
     const room = document.getElementById('roomInput').value.trim();
-
     if (!name) { shake('nameInput'); return; }
     if (!room)  { shake('roomInput'); return; }
 
     myName = name;
     roomId = room;
     userId = Date.now().toString(36) + Math.random().toString(36).slice(2);
+    renderedKeys.clear();
 
     document.getElementById('roomLabel').textContent = room;
     document.getElementById('loginScreen').style.display = 'none';
@@ -592,35 +706,30 @@
       typingRef   = ref(db, `rooms/${roomId}/typing/${userId}`);
       presenceRef = ref(db, `rooms/${roomId}/presence/${userId}`);
 
-      // Presença online
       set(presenceRef, { name: myName, ts: serverTimestamp() });
       onDisconnect(presenceRef).remove();
       onDisconnect(typingRef).remove();
 
-      // Contar online
       onValue(ref(db, `rooms/${roomId}/presence`), snap => {
         const count = snap.exists() ? Object.keys(snap.val()).length : 1;
         document.getElementById('onlineLabel').textContent = count > 1 ? `${count} ONLINE` : 'ONLINE';
       });
 
-      // Mensagens
-      onChildAdded(messagesRef, snap => {
+      onChildAdded(messagesRef, (snap) => {
+        const key = snap.key;
+        if (renderedKeys.has(key)) return;
+        renderedKeys.add(key);
         const d = snap.val();
-        renderMsg(d.name, d.text, d.name === myName, d.time);
+        renderMsg(d.name, d.text, d.name === myName, d.time, snap.ref);
       });
 
-      // Typing
       onValue(ref(db, `rooms/${roomId}/typing`), snap => {
         if (!snap.exists()) { hideTyping(); return; }
-        const others = Object.entries(snap.val())
-          .filter(([k]) => k !== userId)
-          .map(([,v]) => v.name);
+        const others = Object.entries(snap.val()).filter(([k]) => k !== userId).map(([,v]) => v.name);
         others.length > 0 ? showTyping() : hideTyping();
       });
-
     } else {
-      // Demo local
-      addSysMsg('⚠ Modo demo — configure o Firebase para chat real entre pessoas');
+      addSysMsg('Modo demo — configure o Firebase para chat real');
     }
 
     addSysMsg(`Você entrou na sala ${room} como ${name}`);
@@ -643,7 +752,7 @@
       });
       set(typingRef, null);
     } else {
-      renderMsg(myName, text, true, now());
+      renderMsg(myName, text, true, now(), null);
     }
   };
 
@@ -659,6 +768,7 @@
       remove(presenceRef);
       remove(typingRef);
     }
+    renderedKeys.clear();
     document.getElementById('chatScreen').style.display = 'none';
     document.getElementById('loginScreen').style.display = 'flex';
     document.getElementById('messagesArea').innerHTML = `
@@ -673,21 +783,116 @@
     `;
   };
 
-  function renderMsg(name, text, isMine, time) {
+  function renderMsg(name, text, isMine, time, msgRef) {
     document.getElementById('emptyState')?.remove();
     const area = document.getElementById('messagesArea');
     const typing = document.getElementById('typingIndicator');
 
     const wrap = document.createElement('div');
     wrap.className = `msg-wrapper ${isMine ? 'mine' : 'other'}`;
+
+    const delBtn = isMine && msgRef
+      ? `<button class="delete-btn" onclick="deleteMsgRef(this)" data-ref="${msgRef.toString()}">✕</button>`
+      : '';
+
     wrap.innerHTML = `
       <div class="msg-sender">${escHtml(name)}</div>
-      <div class="msg-bubble">${escHtml(text)}</div>
+      <div class="msg-bubble">${escHtml(text)}${delBtn}</div>
       <div class="msg-time">${time || now()}</div>
-    `;   
+    `;
     area.insertBefore(wrap, typing);
     area.scrollTop = area.scrollHeight;
   }
+
+  window.deleteMsgRef = function(btn) {
+    if (!confirm('Apagar esta mensagem?')) return;
+    const refPath = btn.getAttribute('data-ref');
+    const msgRef = ref(db, refPath.replace('https://kayo-chat-default-rtdb.firebaseio.com/', ''));
+    remove(msgRef);
+    btn.closest('.msg-wrapper').remove();
+  };
+
+  // ADMIN
+  window.openAdminModal = function() {
+    document.getElementById('adminModal').style.display = 'flex';
+    document.getElementById('adminPassInput').value = '';
+    setTimeout(() => document.getElementById('adminPassInput').focus(), 100);
+  };
+
+  window.closeAdminModal = function() {
+    document.getElementById('adminModal').style.display = 'none';
+  };
+
+  window.checkAdminPass = function() {
+    const pass = document.getElementById('adminPassInput').value;
+    if (pass === ADMIN_PASSWORD) {
+      document.getElementById('adminModal').style.display = 'none';
+      openAdmin();
+    } else {
+      const input = document.getElementById('adminPassInput');
+      input.style.borderColor = '#ff4466';
+      input.style.boxShadow = '0 0 12px #ff446688';
+      setTimeout(() => { input.style.borderColor = ''; input.style.boxShadow = ''; }, 800);
+    }
+  };
+
+  function openAdmin() {
+    document.getElementById('adminScreen').style.display = 'flex';
+    loadAdminData();
+  }
+
+  window.closeAdmin = function() {
+    document.getElementById('adminScreen').style.display = 'none';
+  };
+
+  function loadAdminData() {
+    if (!isConnected) return;
+    onValue(ref(db, 'rooms'), snap => {
+      if (!snap.exists()) {
+        document.getElementById('adminRoomList').innerHTML = '<div style="color:rgba(0,200,255,0.3);font-size:13px;">Nenhuma sala ativa</div>';
+        document.getElementById('statRooms').textContent = '0';
+        document.getElementById('statUsers').textContent = '0';
+        return;
+      }
+
+      const rooms = snap.val();
+      const roomIds = Object.keys(rooms);
+      document.getElementById('statRooms').textContent = roomIds.length;
+
+      let totalUsers = 0;
+      let html = '';
+
+      roomIds.forEach(rid => {
+        const presence = rooms[rid].presence ? Object.keys(rooms[rid].presence).length : 0;
+        const msgs = rooms[rid].messages ? Object.keys(rooms[rid].messages).length : 0;
+        totalUsers += presence;
+        html += `
+          <div class="admin-room-item">
+            <div>
+              <div style="font-family:'Orbitron',sans-serif;font-size:12px;color:var(--neon);letter-spacing:2px;">SALA ${rid}</div>
+              <div style="font-size:12px;color:rgba(0,200,255,0.4);margin-top:2px;">${presence} online · ${msgs} mensagens</div>
+            </div>
+            <button class="admin-del-btn" onclick="deleteRoomById('${rid}')">APAGAR</button>
+          </div>
+        `;
+      });
+
+      document.getElementById('statUsers').textContent = totalUsers;
+      document.getElementById('adminRoomList').innerHTML = html || '<div style="color:rgba(0,200,255,0.3);font-size:13px;">Nenhuma sala ativa</div>';
+    });
+  }
+
+  window.deleteRoomById = function(rid) {
+    if (!confirm(`Apagar sala ${rid} e todas as mensagens?`)) return;
+    remove(ref(db, `rooms/${rid}`));
+  };
+
+  window.deleteRoom = function() {
+    const rid = document.getElementById('deleteRoomInput').value.trim();
+    if (!rid) return;
+    deleteRoomById(rid);
+    document.getElementById('deleteRoomInput').value = '';
+  };
 
   function addSysMsg(text) {
     const area = document.getElementById('messagesArea');
@@ -722,18 +927,12 @@
     const el = document.getElementById(id);
     el.style.borderColor = '#ff4466';
     el.style.boxShadow = '0 0 12px #ff446688';
-    setTimeout(() => {
-      el.style.borderColor = '';
-      el.style.boxShadow = '';
-    }, 800);
+    setTimeout(() => { el.style.borderColor = ''; el.style.boxShadow = ''; }, 800);
     el.focus();
   }
 
   window.handleKey = function(e) {
-    if (e.key === 'Enter' && !e.shiftKey) {
-      e.preventDefault();
-      sendMsg();
-    }
+    if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMsg(); }
   };
 
   window.autoResize = function(el) {
@@ -743,4 +942,3 @@
 </script>
 </body>
 </html>
-
